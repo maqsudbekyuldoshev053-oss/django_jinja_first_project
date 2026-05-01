@@ -39,11 +39,11 @@ class Product(Model):
     def is_stock(self):
         return self.quantity > 0
 
-    class Meta:
-        constraints = [
-            CheckConstraint(condition=Q(discount__lte=100), name='check_product_price',
-                            violation_error_message="chegirma  foizda (0-100 oraliqda bo'lishi kerak)"),
-        ]
+    # class Meta:
+    #     constraints = [
+    #         CheckConstraint(check=Q(discount__lte=100), name='check_product_price',
+    #                         violation_error_message="chegirma  foizda (0-100 oraliqda bo'lishi kerak)"),
+    #     ]
 
     def __str__(self):
         return self.name
