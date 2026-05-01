@@ -166,6 +166,7 @@ class CheckoutView(ListView):
         return context
 
 
+
 class VerifyView(View):
     template_name = 'apps/verify.html'
 
