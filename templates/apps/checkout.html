@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To'lov | Falcon Store</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --falcon-blue: #2c7be5;
+            --falcon-soft-bg: #f9fafd;
+            --falcon-border: #edf2f9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--falcon-soft-bg);
+            color: #344050;
+        }
+
+        .checkout-container {
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .section-card {
+            background: #fff;
+            border: 1px solid var(--falcon-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            color: #12263f;
+        }
+
+        .section-title i {
+            width: 35px;
+            height: 35px;
+            background: #e2eaf4;
+            color: var(--falcon-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #5e6e82;
+        }
+
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #d8e2ef;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: var(--falcon-blue);
+            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
+        }
+
+        /* Payment Method Options */
+        .payment-option {
+            border: 1px solid var(--falcon-border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-option:hover {
+            border-color: var(--falcon-blue);
+            background: #fcfdfe;
+        }
+
+        .payment-option input[type="radio"]:checked + label {
+            color: var(--falcon-blue);
+        }
+
+        .payment-option input {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Order Summary Sticky */
+        .summary-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--falcon-border);
+            position: sticky;
+            top: 20px;
+        }
+
+        .mini-product {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--falcon-border);
+        }
+
+        .mini-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid var(--falcon-border);
+        }
+
+        .btn-confirm {
+            background: #00d27a;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-confirm:hover {
+            background: #00b86b;
+            transform: translateY(-2px);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed var(--falcon-border);
+            font-size: 18px;
+            font-weight: 800;
+            color: #12263f;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="bg-white py-3 border-bottom shadow-sm">
+    <div class="container d-flex justify-content-between">
+        <a href="/" class="text-decoration-none fw-bold text-primary">Falcon Store</a>
+        <span class="text-muted small"><i class="fas fa-lock me-1"></i> Xavfsiz to'lov sahifasi</span>
+    </div>
+</nav>
+
+<div class="container checkout-container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row g-4">
+            <div class="col-lg-8">
+
+                <div class="section-card">
+                    <h4 class="section-title"><i class="fas fa-map-marker-alt"></i> Yetkazib berish manzili</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Ism</label>
+                            <input type="text" name="first_name" class="form-control" placeholder="Ali" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Familiya</label>
+                            <input type="text" name="last_name" class="form-control" placeholder="Valiyev" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Telefon raqam</label>
+                            <input type="tel" name="phone" class="form-control" placeholder="+998 90 123 45 67"
+                                   required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Viloyat</label>
+                            <select name="region" class="form-select">
+                                <option>Toshkent sh.</option>
+                                <option>Samarqand</option>
+                                <option>Farg'ona</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">To'liq manzil (Ko'cha, uy raqami, xonadon)</label>
+                            <input type="text" name="address" class="form-control"
+                                   placeholder="Chilonzor tumani, 5-kvartal, 12-uy" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h4 class="section-title"><i class="fas fa-credit-card"></i> To'lov usuli</h4>
+
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="payme" value="payme" checked>
+                        <label for="payme" class="mb-0 fw-600">
+                            <img src="https://cdn.payme.uz/logo/payme_color.svg" height="20" class="me-2"> Payme orqali
+                            onlayn
+                        </label>
+                    </div>
+
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="cash" value="cash">
+                        <label for="cash" class="mb-0 fw-600">
+                            <i class="fas fa-money-bill-wave text-success me-2"></i> Eshik oldida naqd pul bilan
+                        </label>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="form-label">Kuryer uchun izoh (ixtiyoriy)</label>
+                        <textarea class="form-control" rows="2"
+                                  placeholder="Masalan: Domofon ishlamayapti..."></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="summary-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold mb-0">Sizning buyurtmangiz</h5>
+                        <a href="{% url 'shopping_cart_page' %}"
+                           class="btn btn-sm btn-outline-primary rounded-pill px-3" style="font-size: 11px;">
+                            <i class="fas fa-edit me-1"></i> Tahrirlash
+                        </a>
+                    </div>
+                    {% for item in cart_items %}
+                        <div class="mini-product">
+                            <img src="{{ item.product.images.first.image.url }}" class="mini-img">
+                            <div class="flex-grow-1">
+                                <div class="small fw-bold text-truncate"
+                                     style="max-width: 150px;">{{ item.product.name }}</div>
+                                <div class="text-muted small">{{ item.quantity }} ta x
+                                    ${{ item.product.current_price }}</div>
+                            </div>
+                            <div class="small fw-bold">${{ item.total_price }}</div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="mt-4">
+                        <div class="price-row">
+                            <span class="text-muted">Mahsulotlar soni:</span>
+                            <span>{{ total_count}} ta</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="text-muted">Yetkazib berish:</span>
+                            {% if total_price > 1000 %}
+                                <span class="text-success fw-bold">Bepul</span>
+                            {% else %}
+                                <span class="text-success fw-bold">${{ total_shipping }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="total-row">
+                            <span>Jami:</span>
+                            {% if  total_price > 1000 %}
+                                <span>${{ total_price|floatformat:'-1' }}</span>
+                            {% else %}
+                                <span>${{ total_price|add:total_shipping|floatformat:'-1' }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-confirm shadow">
+                        Buyurtmani tasdiqlash <i class="fas fa-check-circle ms-2"></i>
+                    </button>
+
+                    <p class="text-center small text-muted mt-3">
+                        "Tasdiqlash" tugmasini bosish orqali siz ommaviy ofertaga rozilik bildirasiz.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

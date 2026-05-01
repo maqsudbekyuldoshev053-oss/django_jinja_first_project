@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Savat | Falcon Store</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --falcon-blue: #2c7be5;
+            --falcon-soft-bg: #f9fafd;
+            --falcon-border: #edf2f9;
+            --falcon-danger: #e63757;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--falcon-soft-bg);
+            color: #344050;
+        }
+
+        /* Navbar */
+        .cart-nav {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--falcon-border);
+        }
+
+        .cart-container {
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Card Styles */
+        .cart-card {
+            background: #fff;
+            border: 1px solid var(--falcon-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .cart-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--falcon-border);
+            transition: background 0.2s;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item:hover {
+            background-color: #fcfdfe;
+        }
+
+        /* Image Container */
+        .product-img-box {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 1px solid var(--falcon-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .product-img-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .product-img-box:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Text and Price */
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #12263f;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .product-name:hover {
+            color: var(--falcon-blue);
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #9da9bb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            font-size: 18px;
+            color: #2c7be5;
+        }
+
+        /* Quantity Control */
+        .qty-wrapper {
+            background: #f1f4f8;
+            border-radius: 10px;
+            padding: 5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #fff;
+            border-radius: 8px;
+            color: var(--falcon-blue);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+        }
+
+        .qty-input {
+            width: 40px;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Order Summary */
+        .summary-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--falcon-border);
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .summary-total {
+            border-top: 2px dashed var(--falcon-border);
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #f5803e;
+        }
+
+        .btn-checkout {
+            background: var(--falcon-blue);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background: #1a5abf;
+            box-shadow: 0 8px 16px rgba(44, 123, 229, 0.25);
+        }
+
+        .remove-link {
+            color: var(--falcon-danger);
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .remove-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .product-img-box {
+                width: 70px;
+                height: 70px;
+            }
+
+            .product-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="cart-nav shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/" class="text-decoration-none">
+            <h4 class="mb-0 fw-bold text-primary"><i class="fas fa-feather-alt me-2"></i>Falcon Store</h4>
+        </a>
+        <a href="{% url 'test_list_page' %}" class="btn btn-sm btn-light border rounded-pill px-3">
+            <i class="fas fa-arrow-left me-1"></i> Davom ettirish
+        </a>
+    </div>
+</nav>
+
+<div class="container cart-container">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <h3 class="fw-bold mb-4">Savatchangiz</h3>
+            <div class="cart-card">
+                {% for cart in carts %}
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="product-img-box">
+                                    <a href="{% url 'test_detail_page' cart.product.pk %}">
+                                        {% if cart.product.images.first %}
+                                            <img src="{{ cart.product.images.first.image.url }}"
+                                                 alt="{{ cart.product.name }}">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/100" alt="No Image">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="product-category">{{ cart.product.category.name }}</div>
+                                <a href="{% url 'test_detail_page' cart.product.pk %}" class="product-name">
+                                    {{ cart.product.name }}
+                                </a>
+                                <div class="mt-2">
+                                    <a href="{% url 'remove_cart' cart.pk %}" class="remove-link">
+                                        <i class="far fa-trash-alt me-1"></i> O'chirish
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-3 mt-md-0 d-flex flex-column align-items-md-end">
+                                <div class="price-tag mb-2">
+                                    ${{ cart.product.current_price|floatformat:"-1" }}
+                                </div>
+                                <div class="qty-wrapper">
+                                    <button class="qty-btn" onclick="updateQty(this, -1)"><i
+                                            class="fas fa-minus disabled"></i></button>
+                                    <input type="text" class="qty-input" value="{{ cart.quantity }}" readonly>
+                                    <button class="qty-btn" onclick="updateQty(this, 1)"><i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="p-5 text-center">
+                        <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" width="120"
+                             class="opacity-50 mb-4">
+                        <h5 class="text-muted">Savatingiz hozircha bo'sh</h5>
+                        <a href="{% url 'test_list_page' %}" class="btn btn-primary mt-3 rounded-pill">Xaridni
+                            boshlash</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <h3 class="fw-bold mb-4">Xulosa</h3>
+            <div class="summary-card shadow-sm">
+                <div class="summary-line">
+                    <span class="text-muted">Mahsulotlar soni:</span>
+                    <span class="fw-bold">{{ total_count }} ta</span>
+                </div>
+
+                <div class="summary-line">
+                    <span class="text-muted">Yetkazib berish:</span>
+                    {% if total_price > 1000 %}
+                        <span class="text-success fw-bold">Bepul</span>
+                    {% else %}
+                        <span class="text-primary fw-bold">${{ total_shipping }}</span>
+                    {% endif %}
+                </div>
+                <div class="summary-line">
+                    <span class="text-muted">Soliq ({{ total_discount }}%):</span>
+                    <span class="fw-bold">${{ total_discount_price|floatformat:'-1' }}</span>
+                </div>
+
+                <div class="summary-line summary-total mt-3 pt-3">
+                    <span>Jami summasi:</span>
+                    <span>
+                {% if total_price > 1000 %}
+                    ${{ total_price|floatformat:'-1' }}
+                {% else %}
+                    ${{ total_price|add:total_shipping|floatformat:'-1' }}
+                {% endif %}
+            </span>
+                </div>
+                <div class="mt-4">
+                    <a href="{% url 'checkout_page' %}"
+                       class="btn-checkout shadow-sm text-decoration-none d-flex align-items-center justify-content-center">
+                        To'lovga o'tish <i class="fas fa-chevron-right ms-2"></i>
+                    </a>
+                </div>
+
+                <div class="mt-4 border-top pt-3 text-center">
+                    <p class="small text-muted mb-2 text-uppercase fw-bold"
+                       style="font-size: 10px; letter-spacing: 1px;">
+                        Xavfsiz to'lov turlari
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 opacity-50">
+                        <i class="fab fa-cc-visa fa-2x" title="Visa"></i>
+                        <i class="fab fa-cc-mastercard fa-2x" title="MasterCard"></i>
+                        <i class="fas fa-wallet fa-2x" title="Elektron hamyon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function updateQty(btn, delta) {
+                const input = btn.parentElement.querySelector('.qty-input');
+                let currentVal = parseInt(input.value);
+                let newVal = currentVal + delta;
+                if (newVal >= 1) {
+                    input.value = newVal;
+                    // Bu yerda AJAX orqali bazani ham yangilash mumkin
+                }
+            }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
