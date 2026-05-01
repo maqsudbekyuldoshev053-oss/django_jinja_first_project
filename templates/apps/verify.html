@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kodni tasdiqlash</title>
+</head>
+<body>
+
+<h2>Emailga kelgan kodni kiriting</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="code" placeholder="6 xonali kod">
+    <button type="submit">Tasdiqlash</button>
+</form>
+
+</body>
+</html>

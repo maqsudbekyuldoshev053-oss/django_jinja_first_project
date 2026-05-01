@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kirish | Falcon Store</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --falcon-blue: #2c7be5;
+            --falcon-gradient: linear-gradient(135deg, #2c7be5 0%, #1a5abf 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafd;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 900px;
+            margin: 20px;
+        }
+
+        /* Chap tomondagi bezak qismi */
+        .login-side-decoration {
+            flex: 1;
+            background: var(--falcon-gradient);
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .login-side-decoration::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .login-side-decoration h2 { font-weight: 700; margin-bottom: 20px; }
+        .login-side-decoration p { font-size: 14px; opacity: 0.8; line-height: 1.6; }
+
+        /* O'ng tomondagi forma qismi */
+        .login-side-form {
+            flex: 1.2;
+            padding: 50px;
+            background: #fff;
+        }
+
+        .brand-logo {
+            font-weight: 700;
+            color: var(--falcon-blue);
+            font-size: 24px;
+            text-decoration: none;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .form-label { font-size: 13px; font-weight: 600; color: #5e6e82; }
+
+        .input-group-text {
+            background: #f9fafd;
+            border-right: none;
+            color: #9da9bb;
+        }
+
+        .form-control {
+            border-left: none;
+            background: #f9fafd;
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #dee2e6;
+            background: #fff;
+        }
+
+        .btn-login {
+            background: var(--falcon-gradient);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(44, 123, 229, 0.2); }
+
+        .social-btn {
+            border: 1px solid #edf2f9;
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .social-btn:hover { background: #f9fafd; }
+
+        @media (max-width: 768px) {
+            .login-side-decoration { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="login-side-decoration d-none d-md-flex">
+        <i class="fas fa-shopping-bag fa-3x mb-4"></i>
+        <h2>Falcon Store-ga qaytganingizdan xursandmiz!</h2>
+        <p>Eng so'nggi gadjetlar va eksklyuziv chegirmalar sizni kutmoqda. Hisobingizga kiring va xaridlarni davom ettiring.</p>
+        <div class="mt-auto">
+            <small>© 2024 Falcon Market Team</small>
+        </div>
+    </div>
+
+    <div class="login-side-form">
+        <a href="/" class="brand-logo">Falcon Store</a>
+        <h4 class="fw-bold mb-1">Kirish</h4>
+        <p class="text-muted small mb-4">Davom etish uchun ma'lumotlaringizni kiriting.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Login yoki Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" name="username" class="form-control" placeholder="example@mail.com" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label">Parol</label>
+                    <a href="#" class="small text-decoration-none">Unutdingizmi?</a>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="********" required>
+                    <button class="btn btn-outline-light border text-muted" type="button" onclick="togglePassword()">
+                        <i class="fas fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Tizimga kirish</button>
+        </form>
+
+        <div class="text-center my-4 text-muted small">yoki</div>
+
+        <div class="row g-2">
+            <div class="col-6">
+                <button class="social-btn"><i class="fab fa-google text-danger me-2"></i> Google</button>
+            </div>
+            <div class="col-6">
+                <button class="social-btn"><i class="fab fa-facebook text-primary me-2"></i> Facebook</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 small">
+            Hisobingiz yo'qmi? <a href="{% url 'register' %}" class="fw-bold text-decoration-none">Ro'yxatdan o'tish</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
+
+</body>
+</html>
