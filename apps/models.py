@@ -1,7 +1,6 @@
 from datetime import timedelta
 
-from django.db.models import Model, ForeignKey, CASCADE, JSONField, Q, ImageField, OneToOneField
-from django.db.models.constraints import CheckConstraint
+from django.db.models import Model, ForeignKey, CASCADE, JSONField, ImageField, OneToOneField
 from django.db.models.fields import CharField, DecimalField, TextField, PositiveSmallIntegerField, PositiveIntegerField, \
     DateTimeField
 from django.utils import timezone
