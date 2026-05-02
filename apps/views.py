@@ -4,10 +4,10 @@ from django.contrib.auth.views import LoginView
 from django.http import  HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.utils import generate_code
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
 
+from . import generate_code
 from .forms import RegisterUserModelForm
 from .models import Product, Category, Cart, EmailVerify
 from django.db.models import Q
