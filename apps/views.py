@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
 
-from . import generate_code
+from apps import generate_code
 from .forms import RegisterUserModelForm
 from .models import Product, Category, Cart, EmailVerify
 from django.db.models import Q
